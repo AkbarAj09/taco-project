@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Taco Recipes</title>
+  <link rel="stylesheet" type="text/css" href="/styles/main.css">
+</head>
+<body>
+  <h1>Taco Town 🌮</h1>
+
+  <form action="/recipe" method="POST" class="buttons">
+    <button type="submit" value="0001" name="recipeId">🍗</button>
+    <button type="submit" value="0002" name="recipeId">🥩</button>
+    <button type="submit" value="0003" name="recipeId">🐟</button>
+  </form>
+
+  <div id="recipeContainer">
+    <% if (!recipe) { %>
+      <h2>Pick your favourite taco ingredient 👆</h2>
+    <% } else { %>
+      <h2><%= recipe.name %></h2>
+      <h3>Ingredients:</h3>
+      <ul id="ingredientsList">
+        <li>
+          <%= recipe.ingredients.protein.name %>, <%= recipe.ingredients.protein.preparation %>
+        </li>
+        <li>
+          <%= recipe.ingredients.salsa.name %> (<%= recipe.ingredients.salsa.spiciness %>)
+        </li>
+        <% recipe.ingredients.toppings.forEach(function(topping) { %>
+          <li>
+            <%= topping.name %> - <%= topping.quantity %>
+            <ul>
+              <% topping.ingredients.forEach(function(ing) { %>
+                <li><%= ing %></li>
+              <% }); %>
+            </ul>
+          </li>
+        <% }); %>
+      </ul>
+      <p><strong>Price:</strong> $<%= recipe.price %></p>
+    <% } %>
+  </div>
+</body>
+</html>
